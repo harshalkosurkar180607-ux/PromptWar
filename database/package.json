@@ -1,0 +1,23 @@
+{
+  "name": "promptwar-database",
+  "version": "1.0.0",
+  "description": "Firebase Firestore database configuration and schema for Promptwar",
+  "type": "module",
+  "main": "firebase.js",
+  "scripts": {
+    "test-connection": "node test-connection.js",
+    "test-email": "node test-email-auth.js"
+  },
+  "keywords": [
+    "firebase",
+    "firestore",
+    "promptwar"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "firebase": "^11.4.0",
+    "firebase-admin": "^13.2.0"
+  }
+}

@@ -1,0 +1,55 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: checks if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: checks if user owns the document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if isOwner(userId);
+    }
+
+    // Prompts collection
+    match /prompts/{promptId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated() && request.auth.uid == resource.data.userId;
+    }
+
+    // Battles collection
+    match /battles/{battleId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if false; // Battles should be archived, not deleted
+    }
+
+    // Votes collection
+    match /votes/{voteId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if false; // One vote per user per battle, immutable
+    }
+
+    // Leaderboard collection
+    match /leaderboard/{docId} {
+      allow read: if true;
+      allow write: if false; // Maintained by backend admin SDK
+    }
+
+    // OTP collection (only backend admin SDK has access)
+    match /otps/{email} {
+      allow read, write: if false;
+    }
+  }
+}
