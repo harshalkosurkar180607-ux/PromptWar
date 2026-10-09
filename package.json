@@ -1,0 +1,11 @@
+{
+  "name": "promptwar-cityvibe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CityVibe - Smart Urban & Tourism Intelligence Platform",
+  "scripts": {
+    "build": "npm --prefix frontend install && npm --prefix frontend run build",
+    "dev": "npm --prefix frontend run dev",
+    "lint": "npm --prefix frontend run lint"
+  }
+}
